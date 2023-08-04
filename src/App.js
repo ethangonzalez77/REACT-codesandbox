@@ -5,7 +5,11 @@ const messages = [
   "Learn React ⚛️",
   "Apply for jobs 💼",
   "Invest your new income 🤑",
-  "That's it, what are you waiting for?..."
+  "That's it, what are you waiting for?...",
+  "Goooooo!!!! 🛵🍕",
+  "Just do It!!!",
+  "dont let your dreams be dreams",
+  "make your dreams come true"
 ];
 
 export default function App() {
@@ -20,6 +24,7 @@ export default function App() {
       <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2>
       <button onClick={handlerMsg}>Click</button>
+      <Sandbox />
       <Sandbox />
     </div>
   );
@@ -41,15 +46,15 @@ function Sandbox() {
   function handlerPrevious() {
     // alert("Previously on Avatar 🍃");
     if (step > 0) {
-      setStep(step - 1);
+      setStep((s) => s - 1);
     }
   }
 
   function handlerNext() {
     if (step < 3) {
       setStep(step + 1);
-    }else if(step === 3) {
-      setStep(step + 1);
+    }else if(step >= 3 && step <= 7) {
+      setStep((s) => s + 1);
     }
   }
 
@@ -57,9 +62,10 @@ function Sandbox() {
 
   return (
     <>
-  {
+  <div>
     <button onClick={() => setIsOpenClose(!isOpenClose) }>❌</button>
-  }{
+    </div>
+  {
     isOpenClose &&
     <div className="steps">
       <div className="numbers">
@@ -88,6 +94,7 @@ function Sandbox() {
       </div>
     </div>
 }
+
     </>
   );
 }
