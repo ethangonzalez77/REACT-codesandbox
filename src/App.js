@@ -36,6 +36,7 @@ export default function App() {
 
 function Sandbox() {
   const [step, setStep] = useState(0);
+  const [isOpenClose, setIsOpenClose] = useState(true);
 
   function handlerPrevious() {
     // alert("Previously on Avatar 🍃");
@@ -55,6 +56,11 @@ function Sandbox() {
   // const step = 2;
 
   return (
+    <>
+  {
+    <button onClick={() => setIsOpenClose(!isOpenClose) }>❌</button>
+  }{
+    isOpenClose &&
     <div className="steps">
       <div className="numbers">
         <div className={step > 0 ? "active" : ""}>1</div>
@@ -81,5 +87,7 @@ function Sandbox() {
         </button>
       </div>
     </div>
+}
+    </>
   );
 }
