@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./styles2.css";
 
 const initialItems = [
@@ -24,16 +25,31 @@ function Logo() {
 }
 
 function Form() {
+  const [desc, setDesc] = useState("TESTING.......");
+  const [selectNum, setSelectNum] = useState(1);
+
 
     function handlerSubmitted(e) {
         e.preventDefault();
         // console.log(e);
+        setDesc("TESTING.......");
+        setSelectNum(1)
+    }
+
+    function handlerDescription(e) {
+      setDesc(e.target.value);
+    }
+
+    function handlerSelectNum(e) {
+      // Number(setSelectNum(e.target.value));
+      setSelectNum(Number(e.target.value));
     }
   
+
     return (
         <form className="add-form" onSubmit={handlerSubmitted}>
           <h3>What do you need for your trip?</h3>
-          <select>
+          <select value={selectNum} onChange={handlerSelectNum}>
             {Array.from({ length: 20 }, (_, i) => i + 1).map(
               (num) => (
                 <option value={num} key={num}>
@@ -42,7 +58,10 @@ function Form() {
               )
             )}
           </select>
-          <input type="text" placeholder="Item..." />
+          <input type="text" 
+            placeholder="Item..." 
+            value={desc} 
+            onChange={handlerDescription}/>
           <button>Add</button>
         </form>
       );
