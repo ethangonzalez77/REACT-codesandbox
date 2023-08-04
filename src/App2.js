@@ -24,9 +24,14 @@ function Logo() {
 }
 
 function Form() {
+
+    function handlerSubmitted(e) {
+        alert("AYEEEYOOOOOOO");
+        console.log(e);
+    }
   
     return (
-        <form className="add-form">
+        <form className="add-form" onSubmit={handlerSubmitted}>
           <h3>What do you need for your trip?</h3>
           <select>
             {Array.from({ length: 20 }, (_, i) => i + 1).map(
