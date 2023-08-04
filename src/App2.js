@@ -26,8 +26,8 @@ function Logo() {
 function Form() {
 
     function handlerSubmitted(e) {
-        alert("AYEEEYOOOOOOO");
-        console.log(e);
+        e.preventDefault();
+        // console.log(e);
     }
   
     return (
