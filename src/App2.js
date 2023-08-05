@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./styles2.css";
 
-const initialItems = [
+const initialItems = [//dont nned this anymore now that we got state
   //we are gunna render this list in our ui
   { id: 1, description: "Passports", quantity: 2, packed: false },
   { id: 2, description: "Socks", quantity: 12, packed: false },
@@ -10,11 +10,17 @@ const initialItems = [
 
 export default function App2() {
 
+  const [itemListArr, setItemListArr] = useState([]);
+
+  function handlerAddItem(itemZ) {
+    setItemListArr((iLA) => [...iLA, itemZ]);
+  }
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAddItem={handlerAddItem}/>
+      <PackingList itemListArr={itemListArr}/>
       <Stats />
     </div>
   );
@@ -24,16 +30,23 @@ function Logo() {
   return <h1> 🏝️Far way 💼</h1>;
 }
 
-function Form() {
+function Form({onAddItem}) {
   const [desc, setDesc] = useState("TESTING.......");
   const [selectNum, setSelectNum] = useState(1);
-
+ 
 
     function handlerSubmitted(e) {
         e.preventDefault();
         // console.log(e);
         setDesc("TESTING.......");
         setSelectNum(1)
+
+        // const itemListObj = { id: Date.now(), description: 1, quantity:1, packed: false };
+        const newItem = { desc, selectNum, packed: false, id: Date.now() };
+
+        // console.log(itemListObj);
+
+        onAddItem(newItem);
     }
 
     function handlerDescription(e) {
@@ -44,6 +57,8 @@ function Form() {
       // Number(setSelectNum(e.target.value));
       setSelectNum(Number(e.target.value));
     }
+
+    
   
 
     return (
@@ -67,11 +82,11 @@ function Form() {
       );
 }
 
-function PackingList() {
+function PackingList({itemListArr}) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((item) => (
+        {itemListArr.map((item) => (
           <Item item={item} key={item.id}/>
         ))}
       </ul>
@@ -84,7 +99,8 @@ function Item({ item }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
-        {item.quantity} {item.description}
+        {/* 😅😅😅😅😅was having major issues cuz the props was selcting the wrong properties in the object😅😅😅 */}
+        {item.selectNum} {item.desc}
       </span>
       <button>❌</button>
     </li>
