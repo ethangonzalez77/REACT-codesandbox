@@ -139,6 +139,14 @@ function Stats({itemListArr}) {
 
   const totalItems = itemListArr.length;//created a derived state.
 
+
+  
+  if(totalItems === 0) {
+    return <div className="stats">
+      <p>Add Some Stuff 🤙</p>
+    </div>
+  }
+
   return (
     <footer className="stats">
       <em>💼 you have {totalItems} items on your list, and you already packed X (X%)</em>
