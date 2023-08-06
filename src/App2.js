@@ -23,8 +23,6 @@ export default function App2() {
   }
 
   function handlerCheckBox(checkedBoxId) {
-    
-
     setItemListArr((itemListArr) =>
     itemListArr.map((item) =>
       item.id === checkedBoxId
@@ -32,6 +30,13 @@ export default function App2() {
         : item
     )
   ); 
+  }
+
+  function handlerClearAll() {
+
+    const areYouSure = window.confirm("Are you sure about that???");
+
+    areYouSure ? setItemListArr([]) : alert("Ok");
 
   }
 
@@ -39,7 +44,7 @@ export default function App2() {
     <div className="app">
       <Logo />
       <Form onAddItem={handlerAddItem}/>
-      <PackingList itemListArr={itemListArr} onCheckBox={handlerCheckBox}/>
+      <PackingList itemListArr={itemListArr} onCheckBox={handlerCheckBox} onClearAll={handlerClearAll}/>
       <Stats itemListArr={itemListArr}/>
     </div>
   );
@@ -99,7 +104,7 @@ function Form({onAddItem}) {
       );
 }
 
-function PackingList({itemListArr, onCheckBox}) {
+function PackingList({itemListArr, onCheckBox, onClearAll}) {
 
   const [selectOption, setSelectOption] = useState("z3");
 
@@ -133,6 +138,7 @@ function PackingList({itemListArr, onCheckBox}) {
           <Item item={item} key={item.id} onCheckBox={onCheckBox}/>
         ))}
       </ul>
+      <button onClick={onClearAll}>Clear All?</button>
     </div>
   );
 }
