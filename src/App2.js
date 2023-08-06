@@ -8,6 +8,13 @@ const initialItems = [//dont nned this anymore now that we got state
   { id: 3, description: "Tooth brush", quantity: 12, packed: true },
 ];
 
+//🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔your trying to do math stuff with the stats
+//we wanna display the number of items the users enters. 
+//So we already got a peice of state that contains the list of items a user enters. 
+//So we can use this already exsisting state and do calculations on it.
+//So we are gunna have to pass that array list that holds the users items to the component that is gunna do math stuff with it.
+// so that it can display it on the UI
+
 export default function App2() {
 
   const [itemListArr, setItemListArr] = useState([]);
@@ -16,12 +23,25 @@ export default function App2() {
     setItemListArr((iLA) => [...iLA, itemZ]);
   }
 
+  function handlerCheckBox(checkedBoxId) {
+    
+
+    setItemListArr((itemListArr) =>
+    itemListArr.map((item) =>
+      item.id === checkedBoxId
+        ? { ...item, packed: !item.packed } //🕵️‍♀️ look more into
+        : item
+    )
+  ); 
+
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItem={handlerAddItem}/>
-      <PackingList itemListArr={itemListArr}/>
-      <Stats />
+      <PackingList itemListArr={itemListArr} onCheckBox={handlerCheckBox}/>
+      <Stats itemListArr={itemListArr}/>
     </div>
   );
 }
@@ -57,8 +77,6 @@ function Form({onAddItem}) {
       // Number(setSelectNum(e.target.value));
       setSelectNum(Number(e.target.value));
     }
-
-    
   
 
     return (
@@ -82,22 +100,32 @@ function Form({onAddItem}) {
       );
 }
 
-function PackingList({itemListArr}) {
+function PackingList({itemListArr, onCheckBox}) {
   return (
     <div className="list">
       <ul>
         {itemListArr.map((item) => (
-          <Item item={item} key={item.id}/>
+          <Item item={item} key={item.id} onCheckBox={onCheckBox}/>
         ))}
       </ul>
     </div>
   );
 }
 
-function Item({ item }) {
+function Item({ item, onCheckBox }) {
   //should be <li> cuz thats what direct child components of the <ul> should be
+
+
+
   return (
     <li>
+      <input 
+        type="checkbox"
+        value={item.packed}
+        onChange={()=>onCheckBox(item.id)}
+        
+        >
+        </input>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {/* 😅😅😅😅😅was having major issues cuz the props was selcting the wrong properties in the object😅😅😅 */}
         {item.selectNum} {item.desc}
@@ -107,10 +135,13 @@ function Item({ item }) {
   );
 }
 
-function Stats() {
+function Stats({itemListArr}) {
+
+  const totalItems = itemListArr.length;//created a derived state.
+
   return (
     <footer className="stats">
-      <em>💼 you have X items on your list, and you already packed X (X%)</em>
+      <em>💼 you have {totalItems} items on your list, and you already packed X (X%)</em>
     </footer>
   );
 }
