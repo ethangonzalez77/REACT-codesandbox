@@ -8,12 +8,11 @@ const initialItems = [//dont nned this anymore now that we got state
   { id: 3, description: "Tooth brush", quantity: 12, packed: true },
 ];
 
-//🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔your trying to do math stuff with the stats
-//we wanna display the number of items the users enters. 
-//So we already got a peice of state that contains the list of items a user enters. 
-//So we can use this already exsisting state and do calculations on it.
-//So we are gunna have to pass that array list that holds the users items to the component that is gunna do math stuff with it.
-// so that it can display it on the UI
+//🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔your creating an options box to reorganize the users list
+//first create the options box
+//then use a peice of state for the controled Element
+//get the options to change at least
+//then make the box re-organize the list.
 
 export default function App2() {
 
@@ -101,10 +100,36 @@ function Form({onAddItem}) {
 }
 
 function PackingList({itemListArr, onCheckBox}) {
+
+  const [selectOption, setSelectOption] = useState("z3");
+
+  let reorganizedItemsList;
+
+  if(selectOption === "z1") {
+    reorganizedItemsList = itemListArr;
+  }else if(selectOption === "z2") {
+    reorganizedItemsList = itemListArr.slice()
+    .sort((a, b) => a.desc.localeCompare(b.desc));
+  }else if(selectOption === "z3") {
+    reorganizedItemsList = itemListArr.slice()
+    .sort((a, b) => Number(a.packed) - Number(b.packed));
+  }
+
   return (
     <div className="list">
+      <select 
+        value={selectOption}
+        onChange={(e) => {
+          // alert(e.target.value);
+          setSelectOption(e.target.value);
+        }}
+      >
+        <option value='z1'>ZOOOOMBIEEEEHHHH</option>
+        <option value='z2'>2</option>
+        <option value='z3'>POTAOES</option>
+      </select>
       <ul>
-        {itemListArr.map((item) => (
+        {reorganizedItemsList.map((item) => (
           <Item item={item} key={item.id} onCheckBox={onCheckBox}/>
         ))}
       </ul>
@@ -140,7 +165,7 @@ function Stats({itemListArr}) {
   const totalItems = itemListArr.length;//created a derived state.
 
 
-  
+
   if(totalItems === 0) {
     return <div className="stats">
       <p>Add Some Stuff 🤙</p>
